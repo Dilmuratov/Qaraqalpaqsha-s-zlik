@@ -37,7 +37,7 @@ class AddTermFragment : Fragment(R.layout.fragment_add_term) {
                                 term = term.toString(),
                                 termId = System.currentTimeMillis().toString(),
                                 ownerId = pref.getString("userId", "null").toString(),
-                                ownerPath = pref.getString("userPath", "null").toString()
+                                ownerPath = pref.getString("userPath", "null").toString(),
                             )
                         )
                         Toast.makeText(requireActivity(), "Qosıldı", Toast.LENGTH_SHORT).show()

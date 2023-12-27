@@ -3,14 +3,10 @@ package com.example.qaraqalpaqshaszlik.data.repository
 import android.util.Log
 import com.example.qaraqalpaqshaszlik.data.models.ResultData
 import com.example.qaraqalpaqshaszlik.data.models.TermData
-import com.example.qaraqalpaqshaszlik.data.models.TermData2
 import com.example.qaraqalpaqshaszlik.data.models.UserData
 import com.example.qaraqalpaqshaszlik.domain.MainRepository
-import com.google.firebase.Firebase
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.database
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.firestore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -39,7 +35,7 @@ class MainRepositoryImpl(
     }
 
     override suspend fun addTerm(termData: TermData) {
-        realTimeDatabase.getReference("terms").child(termData.termId.toString()).setValue(termData)
+        realTimeDatabase.getReference("terms").child(termData.termId).setValue(termData)
             .addOnSuccessListener {
                 Log.d("TTTT", "addTerm: Success")
             }
@@ -48,11 +44,11 @@ class MainRepositoryImpl(
             }
     }
 
-    override suspend fun getAllData(): Flow<ResultData<List<TermData2>>> = flow {
+    override suspend fun getAllData(): Flow<ResultData<List<TermData>>> = flow {
         emit(
             ResultData.Success(
                 realTimeDatabase.getReference("terms").get().await().children.mapNotNull { s1 ->
-                    TermData2(
+                    TermData(
                         termId = s1.child("termId").value.toString(),
                         term = s1.child("term").value.toString(),
                         ownerPath = s1.child("ownerPath").value.toString(),
@@ -67,5 +63,17 @@ class MainRepositoryImpl(
                 }
             )
         )
+    }
+
+    override suspend fun rate(like: Boolean, termId: String, userPath: String) {
+        val str = if (like) "like" else "dislike"
+        realTimeDatabase.getReference("terms").child(termId).child(str).child(userPath)
+            .setValue("")
+            .addOnSuccessListener {
+                Log.d("TTTT", "rate: Success")
+            }
+            .addOnFailureListener {
+                Log.d("TTTT", "rate: Failure")
+            }
     }
 }

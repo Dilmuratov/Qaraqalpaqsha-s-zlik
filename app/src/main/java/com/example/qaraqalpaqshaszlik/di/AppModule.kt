@@ -10,7 +10,8 @@ val appModule = module {
         MainViewModelImpl(
             getUserDataUseCase = get(),
             addTermDataUseCase = get(),
-            getAllDataUseCase = get()
+            getAllDataUseCase = get(),
+            rateUseCase = get()
         )
     }
 }
