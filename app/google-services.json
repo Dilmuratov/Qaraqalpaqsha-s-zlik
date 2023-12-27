@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1005075320374",
+    "project_id": "qaraqalpaqsha-so-zlik",
+    "storage_bucket": "qaraqalpaqsha-so-zlik.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1005075320374:android:f07da5f39c841bb550d297",
+        "android_client_info": {
+          "package_name": "com.example.qaraqalpaqshaszlik"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDW9tSDN3tqIfYeqf8LXVx1HpbJ-GOGcog"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

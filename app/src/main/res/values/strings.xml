@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Qaraqalpaqsha sózlik</string>
+    <string name="introduction_text">Qaraqalpaqsha sózlik qosımshasına xosh kelipsiz!</string>
+    <string name="qq_sozlik">Qaraqalpaqsha sózlik</string>
+    <string name="add">Qosıw</string>
+    <string name="kiriw">Kiriw</string>
+    <string name="right">Duris</string>
+    <string name="wrong">Qáte</string>
+</resources>
