@@ -49,7 +49,6 @@ class IntroductionFragment : Fragment(R.layout.fragment_introduction) {
                     var isHave = false
                     for (userData in userDataList) {
                         if (login.toString() == userData.login && password.toString() == userData.password) {
-                            pref.edit().putString("userId", userData.userId).apply()
                             pref.edit().putString("login", userData.login).apply()
                             pref.edit().putString("password", userData.password).apply()
                             pref.edit().putString("username", userData.username).apply()

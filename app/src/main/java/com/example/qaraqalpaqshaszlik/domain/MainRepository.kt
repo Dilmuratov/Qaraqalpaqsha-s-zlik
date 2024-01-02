@@ -13,5 +13,5 @@ interface MainRepository {
 
     suspend fun getAllData(): Flow<ResultData<List<TermData>>>
 
-    suspend fun rate(like: Boolean, termId: String, userPath: String)
+    suspend fun rate(like: Boolean, termId: String, termData: TermData)
 }

@@ -19,5 +19,5 @@ abstract class MainViewModel : ViewModel() {
     abstract val allDataLiveData: LiveData<List<TermData>>
     abstract suspend fun getAllData()
 
-    abstract suspend fun rate(like: Boolean, termId: String, userPath: String)
+    abstract suspend fun rate(like: Boolean, termId: String, termData: TermData)
 }

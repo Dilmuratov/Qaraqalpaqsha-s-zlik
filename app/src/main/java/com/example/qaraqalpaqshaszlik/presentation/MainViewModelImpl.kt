@@ -56,7 +56,7 @@ class MainViewModelImpl(
         }
     }
 
-    override suspend fun rate(like: Boolean, termId: String, userPath: String) {
-        rateUseCase.execute(like, termId, userPath)
+    override suspend fun rate(like: Boolean, termId: String, termData: TermData) {
+        rateUseCase.execute(like, termId, termData)
     }
 }

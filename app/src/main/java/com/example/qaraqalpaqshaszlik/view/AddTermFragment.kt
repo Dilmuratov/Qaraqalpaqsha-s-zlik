@@ -17,33 +17,74 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class AddTermFragment : Fragment(R.layout.fragment_add_term) {
     private lateinit var binding: FragmentAddTermBinding
     private val mainViewModel: MainViewModel by viewModel()
+    private lateinit var list: List<TermData>
     private lateinit var pref: SharedPreferences
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentAddTermBinding.bind(view)
         pref = requireActivity().getSharedPreferences("my_pref", Context.MODE_PRIVATE)
 
+        initObservers()
+
         initListeners()
+    }
+
+    private fun initObservers() {
+        mainViewModel.allDataLiveData.observe(requireActivity()) {
+            list = it
+        }
+
+        MainScope().launch {
+            mainViewModel.getAllData()
+        }
     }
 
     private fun initListeners() {
         binding.btnAdd.setOnClickListener {
             val term = binding.etTerm.text
             if (term != null) {
-                if (term.toString().isNotEmpty()) {
-                    MainScope().launch {
-                        mainViewModel.addTermData(
-                            TermData(
-                                term = term.toString(),
-                                termId = System.currentTimeMillis().toString(),
-                                ownerId = pref.getString("userId", "null").toString(),
-                                ownerPath = pref.getString("userPath", "null").toString(),
-                            )
-                        )
-                        Toast.makeText(requireActivity(), "Qosıldı", Toast.LENGTH_SHORT).show()
-                        (requireActivity() as MainActivity).onBackPressed()
+                if (term.isNotEmpty() || ::list.isInitialized || term.toString() != "" || term.toString() != "null") {
+                    var accept = true
+                    for (termData in list) {
+                        if (termData.term.lowercase() == term.toString().lowercase()) {
+                            accept = false
+
+                        }
                     }
+                    if (accept) {
+                        MainScope().launch {
+                            mainViewModel.addTermData(
+                                TermData(
+                                    term = term.toString(),
+                                    termId = System.currentTimeMillis().toString(),
+                                    ownerPath = pref.getString("userPath", "null")
+                                        .toString(),
+                                    like = "0",
+                                    dislike = "0"
+                                )
+                            )
+                            Toast.makeText(requireActivity(), "Qosıldı", Toast.LENGTH_SHORT)
+                                .show()
+                            (requireActivity() as MainActivity).onBackPressed()
+                        }
+                    } else {
+                        Toast.makeText(
+                            requireActivity(),
+                            "Aldin bunday sóz qosılǵan!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                } else if (::list.isInitialized.not()) {
+                    Toast.makeText(
+                        requireActivity(),
+                        "Iltimas biraz kútiń!\nJúklenbekte...",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    binding.etTerm.error = "Sóz kiritiń!"
                 }
+            } else {
+                binding.etTerm.error = "Sóz kiritiń!"
             }
         }
     }

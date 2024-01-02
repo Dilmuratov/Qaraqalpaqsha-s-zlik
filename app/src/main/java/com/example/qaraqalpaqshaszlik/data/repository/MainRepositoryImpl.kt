@@ -23,7 +23,6 @@ class MainRepositoryImpl(
                     UserData(
                         login = it["login"].toString(),
                         password = it["password"].toString(),
-                        userId = it["userId"].toString(),
                         username = it["username"].toString(),
                         userPath = it.id,
                         monets = it["monets"].toString()
@@ -52,23 +51,16 @@ class MainRepositoryImpl(
                         termId = s1.child("termId").value.toString(),
                         term = s1.child("term").value.toString(),
                         ownerPath = s1.child("ownerPath").value.toString(),
-                        ownerId = s1.child("ownerId").value.toString(),
-                        like = s1.child("like").children.mapNotNull { s2 ->
-                            s2.key.toString()
-                        },
-                        dislike = s1.child("dislike").children.mapNotNull { s3 ->
-                            s3.key.toString()
-                        }
+                        like = s1.child("like").value.toString(),
+                        dislike = s1.child("dislike").value.toString()
                     )
                 }
             )
         )
     }
 
-    override suspend fun rate(like: Boolean, termId: String, userPath: String) {
-        val str = if (like) "like" else "dislike"
-        realTimeDatabase.getReference("terms").child(termId).child(str).child(userPath)
-            .setValue("")
+    override suspend fun rate(like: Boolean, termId: String, termData: TermData) {
+        realTimeDatabase.getReference("terms").child(termId).setValue(termData)
             .addOnSuccessListener {
                 Log.d("TTTT", "rate: Success")
             }
