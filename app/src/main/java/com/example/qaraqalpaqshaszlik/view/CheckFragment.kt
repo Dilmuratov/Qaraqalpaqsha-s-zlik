@@ -12,6 +12,7 @@ import com.example.qaraqalpaqshaszlik.data.models.TermData
 import com.example.qaraqalpaqshaszlik.databinding.FragmentCheckBinding
 import com.example.qaraqalpaqshaszlik.presentation.MainViewModel
 import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -29,6 +30,7 @@ class CheckFragment : Fragment(R.layout.fragment_check) {
         initListeners()
 
         initObservers()
+
     }
 
     private fun initObservers() {
@@ -49,15 +51,18 @@ class CheckFragment : Fragment(R.layout.fragment_check) {
         }
 
         binding.btnRandom.setOnClickListener {
-            if (this::list.isInitialized) {
+            binding.btnRandom.isEnabled = false
+            if (this@CheckFragment::list.isInitialized) {
                 num++
                 if (num < list.size) {
                     setData()
                 } else {
                     Toast.makeText(requireActivity(), "Tawsildi", Toast.LENGTH_SHORT).show()
                     num = 0
+                    setData()
                 }
             }
+            binding.btnRandom.isEnabled = true
         }
 
         binding.llMonets.setOnClickListener {
@@ -65,74 +70,89 @@ class CheckFragment : Fragment(R.layout.fragment_check) {
         }
 
         binding.btnRight.setOnClickListener {
-            if (this::list.isInitialized) {
-                val termData = list[num]
-                val userPath = pref.getString("userPath", "").toString()
-                if (termData.ownerPath != userPath) {
-                    MainScope().launch {
-                        mainViewModel.rate(
-                            true,
-                            termData.termId,
-                            TermData(
+            MainScope().launch {
+                binding.btnRight.isEnabled = false
+                delay(1000)
+                if (this@CheckFragment::list.isInitialized) {
+                    val termData = list[num]
+                    val userPath = pref.getString("userPath", "").toString()
+                    if (termData.ownerPath != userPath) {
+                        MainScope().launch {
+                            mainViewModel.rate(
+                                true,
                                 termData.termId,
-                                termData.term,
-                                termData.ownerPath,
-                                (termData.like.toInt() + 1).toString(),
-                                termData.dislike
+                                TermData(
+                                    termData.termId,
+                                    termData.term,
+                                    termData.ownerPath,
+                                    (termData.like.toInt() + 1).toString(),
+                                    termData.dislike
+                                )
                             )
-                        )
+                        }
+                    } else {
+                        Toast.makeText(
+                            requireActivity(),
+                            "Siz ózińizdiń sózligińizge dawıs beralmaysız!",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
+                    initObservers()
                 } else {
                     Toast.makeText(
                         requireActivity(),
-                        "Siz ózińizdiń sózligińizge dawıs beralmaysız!",
+                        "Iltimas biraz kútiń!\nJúklenbekte...",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-                initObservers()
-            } else {
-                Toast.makeText(
-                    requireActivity(),
-                    "Iltimas biraz kútiń!\nJúklenbekte...",
-                    Toast.LENGTH_SHORT
-                ).show()
+                num++
+                setData()
+                binding.btnRight.isEnabled = true
             }
 
         }
 
         binding.btnWrong.setOnClickListener {
-            if (this::list.isInitialized) {
-                val termData = list[num]
-                val userPath = pref.getString("userPath", "").toString()
-                if (termData.ownerPath != userPath) {
-                    MainScope().launch {
-                        mainViewModel.rate(
-                            true,
-                            termData.termId,
-                            TermData(
+            MainScope().launch {
+                binding.btnWrong.isEnabled = false
+                delay(1000)
+                if (this@CheckFragment::list.isInitialized) {
+                    val termData = list[num]
+                    val userPath = pref.getString("userPath", "").toString()
+                    if (termData.ownerPath != userPath) {
+                        MainScope().launch {
+                            mainViewModel.rate(
+                                true,
                                 termData.termId,
-                                termData.term,
-                                termData.ownerPath,
-                                termData.like,
-                                (termData.dislike.toInt() + 1).toString()
+                                TermData(
+                                    termData.termId,
+                                    termData.term,
+                                    termData.ownerPath,
+                                    termData.like,
+                                    (termData.dislike.toInt() + 1).toString()
+                                )
                             )
-                        )
+                        }
+                    } else {
+                        Toast.makeText(
+                            requireActivity(),
+                            "Siz ózińizdiń sózligińizge dawıs beralmaysız!",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
+                    initObservers()
                 } else {
                     Toast.makeText(
                         requireActivity(),
-                        "Siz ózińizdiń sózligińizge dawıs beralmaysız!",
+                        "Iltimas biraz kútiń!\nJúklenbekte...",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-                initObservers()
-            } else {
-                Toast.makeText(
-                    requireActivity(),
-                    "Iltimas biraz kútiń!\nJúklenbekte...",
-                    Toast.LENGTH_SHORT
-                ).show()
+                num++
+                setData()
+                binding.btnWrong.isEnabled = true
             }
+
         }
     }
 
@@ -140,8 +160,8 @@ class CheckFragment : Fragment(R.layout.fragment_check) {
         if (num < list.size) {
             val termData = list[num]
             binding.tvTerm.text = termData.term
-            binding.btnRight.text = "Duris(+${termData.like})"
-            binding.btnWrong.text = "Qáte(-${termData.dislike})"
+//            binding.btnRight.text = "Duris(+${termData.like})"
+//            binding.btnWrong.text = "Qáte(-${termData.dislike})"
 
             Log.d("TTTT", "setData: ${list[num].like}")
             Log.d("TTTT", "setData: ${list[num].dislike}")

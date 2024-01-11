@@ -5,11 +5,11 @@
     android:layout_height="match_parent"
     android:background="@drawable/img_background">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_dictionary"
         android:layout_width="186dp"
         android:layout_height="186dp"
-        android:src="@drawable/ic_dictionary"
+        android:src="@drawable/ic_profile"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,17 +19,17 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/qq_sozlik"
-        android:textSize="48sp"
-        android:gravity="center"
-        android:layout_marginTop="4dp"
         android:layout_marginStart="12dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="12dp"
         android:fontFamily="@font/gilroy_regular"
+        android:gravity="center"
+        android:text="@string/qq_sozlik"
         android:textColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textSize="48sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iv_dictionary"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_dictionary" />
 
     <ImageView
         android:id="@+id/iv_next"
@@ -39,6 +39,6 @@
         android:layout_marginBottom="38dp"
         android:src="@drawable/ic_next"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

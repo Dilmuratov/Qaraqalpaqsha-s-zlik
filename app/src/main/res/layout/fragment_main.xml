@@ -9,10 +9,10 @@
         android:id="@+id/ll_monets"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_btn"
         android:layout_gravity="end"
-        android:layout_marginEnd="24dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/bg_btn"
         android:orientation="horizontal">
 
         <ImageView
@@ -28,21 +28,21 @@
             android:layout_gravity="center"
             android:layout_marginVertical="11dp"
             android:layout_marginEnd="12dp"
+            android:fontFamily="@font/gilroy_regular"
             android:gravity="start"
             android:text="9150"
-            android:fontFamily="@font/gilroy_regular"
             android:textColor="@color/white"
             android:textSize="18sp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/iv_dictionary"
         android:layout_width="88dp"
         android:layout_height="88dp"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
-        android:src="@drawable/ic_dictionary" />
+        android:src="@drawable/ic_profile" />
 
     <TextView
         android:id="@+id/tv_qq_sozlik"
@@ -51,8 +51,8 @@
         android:layout_gravity="center"
         android:layout_marginHorizontal="12dp"
         android:layout_marginTop="16dp"
-        android:gravity="center"
         android:fontFamily="@font/gilroy_regular"
+        android:gravity="center"
         android:text="@string/qq_sozlik"
         android:textColor="@color/white"
         android:textSize="24sp" />
@@ -81,8 +81,8 @@
             android:layout_gravity="center"
             android:layout_marginVertical="11dp"
             android:layout_weight="1"
-            android:gravity="start"
             android:fontFamily="@font/gilroy_regular"
+            android:gravity="start"
             android:text="Jańa sóz qosıw"
             android:textColor="@color/white"
             android:textSize="24sp" />
@@ -120,8 +120,8 @@
             android:layout_gravity="center"
             android:layout_marginVertical="11dp"
             android:layout_weight="1"
-            android:gravity="start"
             android:fontFamily="@font/gilroy_regular"
+            android:gravity="start"
             android:text="Sózlerdi tekseriw"
             android:textColor="@color/white"
             android:textSize="24sp" />

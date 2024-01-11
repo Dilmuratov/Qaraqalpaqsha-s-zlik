@@ -10,6 +10,7 @@ import com.example.qaraqalpaqshaszlik.R
 import com.example.qaraqalpaqshaszlik.data.models.TermData
 import com.example.qaraqalpaqshaszlik.databinding.FragmentAddTermBinding
 import com.example.qaraqalpaqshaszlik.presentation.MainViewModel
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -63,22 +64,23 @@ class AddTermFragment : Fragment(R.layout.fragment_add_term) {
                                     dislike = "0"
                                 )
                             )
-                            Toast.makeText(requireActivity(), "Qosıldı", Toast.LENGTH_SHORT)
-                                .show()
+//                            Toast.makeText(requireActivity(), "Qosıldı", Toast.LENGTH_SHORT)
+//                                .show()
+                            showSnackbar()
                             (requireActivity() as MainActivity).onBackPressed()
                         }
                     } else {
-                        Toast.makeText(
-                            requireActivity(),
+                        Snackbar.make(
+                            requireView(),
                             "Aldin bunday sóz qosılǵan!",
-                            Toast.LENGTH_SHORT
+                            Snackbar.LENGTH_SHORT
                         ).show()
                     }
                 } else if (::list.isInitialized.not()) {
-                    Toast.makeText(
-                        requireActivity(),
+                    Snackbar.make(
+                        requireView(),
                         "Iltimas biraz kútiń!\nJúklenbekte...",
-                        Toast.LENGTH_SHORT
+                        Snackbar.LENGTH_SHORT
                     ).show()
                 } else {
                     binding.etTerm.error = "Sóz kiritiń!"
@@ -87,5 +89,10 @@ class AddTermFragment : Fragment(R.layout.fragment_add_term) {
                 binding.etTerm.error = "Sóz kiritiń!"
             }
         }
+    }
+
+    private fun showSnackbar() {
+        Snackbar.make(requireView(), "Qosildi", Snackbar.LENGTH_SHORT).show()
+//        snackbar
     }
 }
